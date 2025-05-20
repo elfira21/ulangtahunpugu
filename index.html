@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Happy Birthday Pugu!</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&family=Quicksand&display=swap" rel="stylesheet">
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      font-family: 'Quicksand', sans-serif;
+      background: linear-gradient(to bottom right, #ffd6e8, #ffe6f0);
+      text-align: center;
+      color: #880e4f;
+      overflow-x: hidden;
+    }
+    .opening {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background-color: #fff0f5;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      z-index: 9999;
+    }
+    .opening h2 {
+      font-family: 'Pacifico', cursive;
+      font-size: 2.5em;
+      margin-bottom: 20px;
+      color: #d81b60;
+    }
+    .open-btn {
+      padding: 15px 30px;
+      font-size: 1.2em;
+      border: none;
+      border-radius: 30px;
+      background-color: #f06292;
+      color: white;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+    .open-btn:hover {
+      background-color: #ec407a;
+    }
+    .container {
+      display: none;
+      padding: 50px 20px;
+    }
+    h1 {
+      font-family: 'Pacifico', cursive;
+      font-size: 3em;
+      margin-bottom: 20px;
+      animation: fadeIn 2s ease-in-out;
+    }
+    .photo {
+      width: 200px;
+      border-radius: 20px;
+      margin: 20px auto;
+      box-shadow: 0 10px 20px rgba(0,0,0,0.2);
+      animation: fadeIn 3s ease-in-out;
+    }
+    .message {
+      font-size: 1.2em;
+      max-width: 600px;
+      margin: auto;
+      animation: fadeInUp 3s ease-out;
+      white-space: pre-line;
+      min-height: 160px;
+    }
+    audio {
+      display: none;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    .confetti {
+      position: fixed;
+      width: 100%;
+      height: 100%;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+      z-index: 1000;
+    }
+  </style>
+</head>
+<body>
+  <div class="opening" id="opening">
+    <h2>Selamat Ulang Tahun Pugu!</h2>
+    <button class="open-btn" onclick="startSurprise()">Buka 🎁</button>
+  </div>
+
+  <canvas class="confetti"></canvas>
+
+  <div class="container" id="mainContent">
+    <h1>🎉 Selamat Ulang Tahun, Pugu Cayangku! 🎉</h1>
+    <img class="photo" src="WhatsApp Image 2025-05-14 at 12.29.20.jpeg" alt="Pugu">
+    <p class="message" id="message"></p>
+  </div>
+
+  <audio id="bgMusic" autoplay loop>
+    <source src="happy.mp3" type="audio/mpeg">
+    Browser tidak mendukung audio.
+  </audio>
+
+  <!-- Confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.4.0/dist/confetti.browser.min.js"></script>
+  <script>
+    const canvas = document.querySelector('.confetti');
+    const confettiInstance = confetti.create(canvas, {
+      resize: true,
+      useWorker: true
+    });
+
+    function fireHeartConfetti() {
+      confettiInstance({
+        particleCount: 10,
+        angle: 90,
+        spread: 360,
+        origin: { y: 0 },
+        shapes: ['❤️'],
+        scalar: 1.2,
+        colors: ['#ff4d88', '#ff66a3', '#ff85b3']
+      });
+    }
+    setInterval(fireHeartConfetti, 300);
+
+    const fullText = `Selamat ulang tahun pugu cayangku. Semoga berkah di umur yang bertambah ini,\ndimudahkan segala urusan dan ujian yang dilalui,\ndimudahkan rezeki, dan sukses terus biar cepat dapat kerja. 💖\n\nKurang-kurangin bangun siangnya yaa, harus disiplin! 💕`;
+    const messageElement = document.getElementById("message");
+    let index = 0;
+
+    function typeWriter() {
+      if (index < fullText.length) {
+        messageElement.innerHTML += fullText.charAt(index);
+        index++;
+        setTimeout(typeWriter, 30);
+      }
+    }
+
+    function startSurprise() {
+      document.getElementById("opening").style.display = "none";
+      document.getElementById("mainContent").style.display = "block";
+      document.getElementById("bgMusic").play();
+      typeWriter();
+    }
+  </script>
+</body>
+</html>
